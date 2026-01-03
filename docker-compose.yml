@@ -1,0 +1,62 @@
+name: devtools-hub-infra
+
+services:
+  # ----------------------------------------------------------------
+  # 1. Banco de Dados (PostgreSQL)
+  # ----------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: devtools-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - devtools-network
+
+  # ----------------------------------------------------------------
+  # 2. Cache & Pub/Sub (Redis)
+  # ----------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: devtools-redis
+    restart: always
+    command: redis-server --appendonly yes
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - devtools-network
+
+  # ----------------------------------------------------------------
+  # 3. Message Broker (RabbitMQ)
+  # ----------------------------------------------------------------
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: devtools-rabbitmq
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    ports:
+      - "${RABBITMQ_PORT_AMQP}:5672"
+      - "${RABBITMQ_PORT_UI}:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - devtools-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  rabbitmq_data:
+
+networks:
+  devtools-network:
+    driver: bridge

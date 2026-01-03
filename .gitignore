@@ -1,0 +1,27 @@
+# --- Segurança (CRUCIAL) ---
+.env
+.env.*
+!.env.example
+
+# --- Java (Spring Boot) ---
+target/
+*.class
+*.jar
+*.war
+
+# --- Node.js (NestJS / Angular / React) ---
+node_modules/
+dist/
+npm-debug.log
+yarn-error.log
+.angular/
+
+# --- IDEs e Sistema ---
+.idea/
+*.iml
+.vscode/
+.DS_Store
+thumbs.db
+
+# --- Logs Gerais ---
+*.log
