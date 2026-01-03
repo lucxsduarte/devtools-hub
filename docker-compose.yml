@@ -52,10 +52,23 @@ services:
     networks:
       - devtools-network
 
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Permite que o Portainer gerencie o Docker
+      - portainer_data:/data # Salva suas senhas e configs do Portainer
+    networks:
+      - devtools-network
+
 volumes:
   postgres_data:
   redis_data:
   rabbitmq_data:
+  portainer_data:
 
 networks:
   devtools-network:
