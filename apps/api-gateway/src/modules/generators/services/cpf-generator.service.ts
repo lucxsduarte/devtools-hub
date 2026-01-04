@@ -15,12 +15,12 @@ export class CpfGeneratorService {
         const num9 = this.randomDigit();
 
         // Cálculo do primeiro dígito verificador
-        let sum = num1 * 10 + num2 * 9 + num3 * 8 + num4 * 7 + num5 * 6 + num6 * 5 + num7 * 4 + num8 * 3 + num9 * 2;
+        let sum = (num1 * 10) + (num2 * 9) + (num3 * 8) + (num4 * 7) + (num5 * 6) + (num6 * 5) + (num7 * 4) + (num8 * 3) + (num9 * 2);
         let remainder = sum % 11;
         const digit1 = remainder < 2 ? 0 : 11 - remainder;
 
         // Cálculo do segundo dígito verificador
-        sum = num1 * 11 + num2 * 10 + num3 * 9 + num4 * 8 + num5 * 7 + num6 * 6 + num7 * 5 + num8 * 4 + num9 * 3 + digit1 * 2;
+        sum = (num1 * 11) + (num2 * 10) + (num3 * 9) + (num4 * 8) + (num5 * 7) + (num6 * 6) + (num7 * 5) + (num8 * 4) + (num9 * 3) + (digit1 * 2);
         remainder = sum % 11;
         const digit2 = remainder < 2 ? 0 : 11 - remainder;
 
