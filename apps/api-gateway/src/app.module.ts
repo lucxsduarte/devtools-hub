@@ -3,6 +3,11 @@ import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {ConfigModule, ConfigService} from "@nestjs/config";
 import {ClientsModule, Transport} from "@nestjs/microservices";
+import { GeneratorsModule } from './modules/generators/generators.module';
+import { ConvertersModule } from './modules/converters/converters.module';
+import { FormattersModule } from './modules/formatters/formatters.module';
+import { UtilitiesModule } from './modules/utilities/utilities.module';
+import { CoreModule } from './modules/core/core.module';
 
 @Module({
     imports: [
@@ -13,6 +18,7 @@ import {ClientsModule, Transport} from "@nestjs/microservices";
         ClientsModule.registerAsync([
             {
                 name: 'CORE_WORKER_SERVICE', // Nome que usaremos para chamar o Java
+                inject: [ConfigService],
                 useFactory: (configService: ConfigService) => ({
                     transport: Transport.RMQ,
                     options: {
@@ -25,9 +31,13 @@ import {ClientsModule, Transport} from "@nestjs/microservices";
                         },
                     },
                 }),
-                inject: [ConfigService],
             },
         ]),
+        GeneratorsModule,
+        ConvertersModule,
+        FormattersModule,
+        UtilitiesModule,
+        CoreModule,
     ],
     controllers: [AppController],
     providers: [AppService],
