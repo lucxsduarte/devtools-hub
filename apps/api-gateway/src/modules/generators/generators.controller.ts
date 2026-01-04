@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { CpfGeneratorService } from './services/cpf-generator.service';
 import {CnpjGeneratorService} from "./services/cnpj-generator.service";
-import {ApiTags} from "@nestjs/swagger";
+import {ApiOperation, ApiQuery, ApiTags} from "@nestjs/swagger";
 
 @ApiTags('Generators')
 @Controller('generators')
@@ -12,6 +12,13 @@ export class GeneratorsController {
     ) {}
 
     @Get('cpf')
+    @ApiOperation({ summary: 'Gerar um CPF válido.' })
+    @ApiQuery({
+        name: 'format',
+        type: Boolean,
+        required: false,
+        description: 'Adicionar pontuação?',
+    })
     generateCpf(@Query('format') format: string) {
         const shouldFormat = format !== 'false';
 
@@ -23,6 +30,13 @@ export class GeneratorsController {
     }
 
     @Get('cnpj')
+    @ApiOperation({ summary: 'Gera um CNPJ válido.'})
+    @ApiQuery({
+        name: 'format',
+        type: Boolean,
+        required: false,
+        description: 'Adicionar pontuação?',
+    })
     generateCnpj(@Query('format') format: string) {
         const shouldFormat = format !== 'false';
 

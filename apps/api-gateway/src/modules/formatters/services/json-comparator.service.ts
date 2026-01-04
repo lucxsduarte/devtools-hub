@@ -1,11 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import * as _ from 'lodash'; // Dica: Instalar lodash ajuda muito, mas faremos nativo para aprender
-
-export interface DiffResult {
-    path: string;
-    leftValue: any;
-    rightValue: any;
-}
+import {parseLooseJson} from "../../utilities/json.helper";
+import {DiffResult} from "../interfaces/formatter.interfaces";
 
 @Injectable()
 export class JsonComparatorService {
@@ -14,15 +9,14 @@ export class JsonComparatorService {
         let obj1, obj2;
 
         try {
-            obj1 = JSON.parse(jsonLeft);
-            obj2 = JSON.parse(jsonRight);
+            obj1 = parseLooseJson(jsonLeft);
+            obj2 = parseLooseJson(jsonRight);
         } catch (e) {
-            throw new BadRequestException('Um dos JSONs enviados é inválido.');
+            throw new BadRequestException('Um dos JSONs enviados é inválido ou não pode ser interpretado.');
         }
 
         return this.findDifferences(obj1, obj2);
     }
-
     private findDifferences(obj1: any, obj2: any, path: string = ''): DiffResult[] {
         let diffs: DiffResult[] = [];
 
