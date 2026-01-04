@@ -1,8 +1,8 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { JsonFormatterService } from './services/json-formatter.service';
 import { JsonComparatorService } from './services/json-comparator.service';
-import {ApiOperation, ApiTags} from "@nestjs/swagger";
-import {JsonCompareDto, JsonFormatDto} from "./dtos/formatter-inputs.dto";
+import {ApiBody, ApiConsumes, ApiOperation, ApiTags} from "@nestjs/swagger";
+import {JsonCompareDto} from "./dtos/formatter-inputs.dto";
 
 @ApiTags('Formatters')
 @Controller('formatters')
@@ -14,11 +14,23 @@ export class FormattersController {
 
     @Post('json-format')
     @ApiOperation({ summary: 'Formata e indenta um JSON minificado' })
-    formatJson(@Body() body: JsonFormatDto) {
+    @ApiConsumes('text/plain')
+    @ApiBody({
+        schema: { type: 'string', example: '{nome: "Teste", idade: 25 }' }
+    })
+    formatJson(@Body() rawBody: string) {
+        if (!rawBody || typeof rawBody !== 'string') {
+            if (typeof rawBody === 'object') {
+                rawBody = JSON.stringify(rawBody);
+            } else {
+                return { category: 'Formatters', tool: 'JSON Formatter', value: '' };
+            }
+        }
+
         return {
             category: 'Formatters',
             tool: 'JSON Formatter',
-            value: this.formatterService.format(body.json),
+            value: this.formatterService.format(rawBody),
         };
     }
 

@@ -6,7 +6,7 @@ import {ClientsModule, Transport} from "@nestjs/microservices";
 import { GeneratorsModule } from './modules/generators/generators.module';
 import { ConvertersModule } from './modules/converters/converters.module';
 import { FormattersModule } from './modules/formatters/formatters.module';
-import { UtilitiesModule } from './modules/utilities/utilities.module';
+import { UtilitiesModule } from './modules/utils/utilities.module';
 import { CoreModule } from './modules/core/core.module';
 
 @Module({

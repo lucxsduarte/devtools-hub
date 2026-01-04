@@ -1,13 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class JsonFormatDto {
-    @ApiProperty({
-        description: 'O JSON que você quer formatar (pode estar minificado)',
-        example: '{"nome":"Lucas","cargo":"Dev"}'
-    })
-    json: string;
-}
-
 export class JsonCompareDto {
     @ApiProperty({
         description: 'O JSON original (lado esquerdo)',

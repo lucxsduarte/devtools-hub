@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import {parseLooseJson} from "../../utilities/json.helper";
+import {parseLooseJson} from "../../utils/json.helper";
 import {DiffResult} from "../interfaces/formatter.interfaces";
 
 @Injectable()
