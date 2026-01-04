@@ -1,7 +1,9 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { CpfGeneratorService } from './services/cpf-generator.service';
 import {CnpjGeneratorService} from "./services/cnpj-generator.service";
+import {ApiTags} from "@nestjs/swagger";
 
+@ApiTags('Generators')
 @Controller('generators')
 export class GeneratorsController {
     constructor(

@@ -22,12 +22,20 @@ export class CatalogService {
             endpoint: '/generators/cnpj',
         },
         {
-            id: 'json-fmt',
-            name: 'Formatador JSON',
+            id: 'json-format',
+            name: 'Formatador de JSON',
             category: 'Formatters',
-            description: 'Identar e organizar JSON minificado.',
-            keywords: ['json', 'pretty', 'format'],
-            endpoint: '/formatters/json',
+            description: 'Indenta e organiza JSONs bagunçados.',
+            keywords: ['json', 'pretty', 'format', 'lint'],
+            endpoint: '/formatters/json-format',
+        },
+        {
+            id: 'json-compare',
+            name: 'Comparador de JSON',
+            category: 'Formatters',
+            description: 'Compara dois JSONs e mostra as diferenças.',
+            keywords: ['json', 'diff', 'compare', 'diferenca'],
+            endpoint: '/formatters/json-compare',
         },
         // Adicionaremos mais aqui conforme você implementar
     ];
