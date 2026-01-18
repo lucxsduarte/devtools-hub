@@ -1,5 +1,5 @@
 export interface DiffResult {
-    path: string;
-    leftValue: any;
-    rightValue: any;
+  path: string;
+  leftValue: any;
+  rightValue: any;
 }

@@ -5,6 +5,6 @@ import { FormattersController } from './formatters.controller';
 
 @Module({
   providers: [JsonFormatterService, JsonComparatorService],
-  controllers: [FormattersController]
+  controllers: [FormattersController],
 })
 export class FormattersModule {}
