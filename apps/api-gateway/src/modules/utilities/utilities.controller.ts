@@ -1,12 +1,13 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SiteInspectorService } from './services/site-inspector.service';
+import { InspectSiteDto } from './dtos/inspect-site.dto';
 
 @ApiTags('Utilities')
 @Controller('utilities')
 export class UtilitiesController {
   constructor(private readonly siteInspectorService: SiteInspectorService) {}
-
+  
   @Post('site-inspector')
   @ApiOperation({ summary: 'Envia site para análise' })
   @ApiBody({
@@ -23,7 +24,7 @@ export class UtilitiesController {
       },
     },
   })
-  analyzeSite(@Body() body: { url: string; socketId?: string }) {
+  analyzeSite(@Body() body: InspectSiteDto) {
     return {
       category: 'Utilities',
       tool: 'Site Inspector',

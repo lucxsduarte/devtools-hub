@@ -1,9 +1,6 @@
 name: devtools-hub-infra
 
 services:
-  # ----------------------------------------------------------------
-  # 1. Banco de Dados (PostgreSQL)
-  # ----------------------------------------------------------------
   postgres:
     image: postgres:16-alpine
     container_name: devtools-postgres
@@ -18,10 +15,12 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - devtools-network
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1024M
 
-  # ----------------------------------------------------------------
-  # 2. Cache & Pub/Sub (Redis)
-  # ----------------------------------------------------------------
   redis:
     image: redis:7-alpine
     container_name: devtools-redis
@@ -33,10 +32,12 @@ services:
       - redis_data:/data
     networks:
       - devtools-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
 
-  # ----------------------------------------------------------------
-  # 3. Message Broker (RabbitMQ)
-  # ----------------------------------------------------------------
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: devtools-rabbitmq
@@ -51,6 +52,11 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
       - devtools-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
 
   portainer:
     image: portainer/portainer-ce:latest
@@ -63,6 +69,11 @@ services:
       - portainer_data:/data # Salva suas senhas e configs do Portainer
     networks:
       - devtools-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
 
 volumes:
   postgres_data:

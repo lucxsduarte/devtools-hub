@@ -8,6 +8,8 @@ import { FormattersModule } from './modules/formatters/formatters.module';
 import { CoreModule } from './modules/core/core.module';
 import { UtilitiesModule } from './modules/utilities/utilities.module';
 import { EventsModule } from './modules/events/events.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -15,6 +17,12 @@ import { EventsModule } from './modules/events/events.module';
       envFilePath: '../../.env',
       isGlobal: true,
     }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10,
+      },
+    ]),
     GeneratorsModule,
     ConvertersModule,
     FormattersModule,
@@ -23,6 +31,12 @@ import { EventsModule } from './modules/events/events.module';
     EventsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}
