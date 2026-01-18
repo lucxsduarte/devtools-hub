@@ -8,6 +8,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
+
 @Component
 public class CoreWorkerConsumer {
 
@@ -38,6 +40,15 @@ public class CoreWorkerConsumer {
             resultadoSeo.addProperty("nota", 98);
             resultadoSeo.addProperty("velocidade", "Rápido");
             resultadoSeo.addProperty("urlAnalisada", url);
+
+            final var chaveCache = "site-cache:" + url;
+
+            resultadoSeo.addProperty("cached_at", System.currentTimeMillis());
+
+            final var jsonCache = gson.toJson(resultadoSeo);
+
+            System.out.println("Salvando no Cache: " + chaveCache);
+            redisTemplate.opsForValue().set(chaveCache, jsonCache, Duration.ofMinutes(10));
 
             final var respostaFinal = new JsonObject();
             respostaFinal.addProperty("socketId", socketId);
