@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+out/
 
 # --- Java (Spring Boot) ---
 target/

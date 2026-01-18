@@ -22,3 +22,4 @@ Thumbs.db
 
 # --- Segredos e Variáveis de Ambiente ---
 .env
+out/
