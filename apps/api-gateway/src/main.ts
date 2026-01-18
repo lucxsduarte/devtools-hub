@@ -6,6 +6,12 @@ import * as bodyParser from 'body-parser';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: true, // "true" aceita qualquer origem (útil para dev). Em produção, troque por ['http://localhost:4200']
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
+
   app.use(bodyParser.text({ type: 'text/plain' }));
 
   const config = new DocumentBuilder()
