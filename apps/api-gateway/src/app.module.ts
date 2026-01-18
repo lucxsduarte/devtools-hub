@@ -7,6 +7,7 @@ import {ConvertersModule} from './modules/converters/converters.module';
 import {FormattersModule} from './modules/formatters/formatters.module';
 import {CoreModule} from './modules/core/core.module';
 import {UtilitiesModule} from './modules/utilities/utilities.module';
+import { EventsModule } from './modules/events/events.module';
 
 @Module({
     imports: [
@@ -19,6 +20,7 @@ import {UtilitiesModule} from './modules/utilities/utilities.module';
         FormattersModule,
         CoreModule,
         UtilitiesModule,
+        EventsModule,
     ],
     controllers: [AppController],
     providers: [AppService],

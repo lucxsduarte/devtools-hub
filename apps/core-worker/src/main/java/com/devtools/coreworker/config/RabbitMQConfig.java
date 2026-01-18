@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    // O nome deve ser IDÊNTICO ao que colocamos no NestJS
     public static final String QUEUE_NAME = "core_queue";
 
     @Bean
