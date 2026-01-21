@@ -1,8 +1,25 @@
 {
+  "name": "devtools-hub",
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*"
+  ],
   "dependencies": {
+    "@angular/animations": "^21.1.0",
     "@nestjs/platform-socket.io": "^11.1.12",
     "@nestjs/websockets": "^11.1.12",
     "ioredis": "^5.9.2",
-    "socket.io": "^4.8.3"
+    "ngx-socket-io": "^4.10.0",
+    "primeflex": "^4.0.0",
+    "primeicons": "^7.0.0",
+    "primeng": "^17.18.11",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.1.0",
+    "@angular/cli": "^21.1.0",
+    "@angular/compiler-cli": "^21.1.0",
+    "typescript": "^5.9.3"
   }
 }

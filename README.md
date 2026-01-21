@@ -44,7 +44,7 @@ graph TD
 ```
 
 ## 🚀 Estrutura do Monorepo
-- **apps/api-gateway:** Backend For Frontend (BFF) em NestJS.
+- **apps/hub-server:** Backend For Frontend (BFF) em NestJS.
 
     - Gerencia conexões WebSocket (Socket.io).
 
@@ -53,7 +53,7 @@ graph TD
     - Verifica Cache antes de processar.
   
 
-- **apps/core-worker:** Worker robusto em Java 21 (Spring Boot).
+- **apps/hub-worker:** Worker robusto em Java 21 (Spring Boot).
 
     - Processamento de tarefas pesadas (Crawling, Cálculos).
 
