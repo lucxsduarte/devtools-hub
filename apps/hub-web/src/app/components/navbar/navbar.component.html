@@ -1,0 +1,29 @@
+<div class="card relative z-5">
+  <p-menubar [model]="items">
+    <ng-template pTemplate="start">
+      <a routerLink="/" class="no-underline flex align-items-center mr-6 cursor-pointer text-color hover:text-primary transition-duration-200">
+        <i class="pi pi-box text-3xl text-primary mr-2"></i>
+        <span class="font-bold text-xl">DevTools<span class="text-primary">Hub</span></span>
+      </a>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+      <div class="flex align-items-center gap-3">
+                <span class="p-input-icon-left hidden md:block">
+                    <i class="pi pi-search"></i>
+                    <input type="text" pInputText placeholder="Buscar..." class="p-inputtext-sm w-15rem" />
+                </span>
+
+        <p-button
+          [icon]="themeService.isDarkMode ? 'pi pi-sun' : 'pi pi-moon'"
+          [rounded]="true"
+          [text]="true"
+          severity="secondary"
+          (onClick)="themeService.toggleTheme()">
+        </p-button>
+
+        <p-avatar icon="pi pi-user" shape="circle" styleClass="bg-primary text-white"></p-avatar>
+      </div>
+    </ng-template>
+  </p-menubar>
+</div>
