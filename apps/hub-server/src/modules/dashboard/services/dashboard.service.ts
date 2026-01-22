@@ -1,8 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, Inject } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { firstValueFrom } from 'rxjs';
 import { ConfigService } from '@nestjs/config';
-import { BusinessException } from '../../../commons/exceptions/business.exception';
+import { firstValueFrom } from 'rxjs';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import type { Cache } from 'cache-manager';
 
 @Injectable()
 export class DashboardService {
@@ -11,17 +12,50 @@ export class DashboardService {
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
-  async getWeather(lat: string, lon: string) {
-    const apiKey = this.configService.get<string>('OPENWEATHER_API_KEY');
-    if (!apiKey) {
-      this.logger.error('API Key do OpenWeather não configurada no .env');
-      throw new BusinessException('Configuração de servidor inválida');
-    }
-    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&appid=${apiKey}`;
+  async getQuote() {
+    const cacheKey = 'hour_quote';
 
-    const geoUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${apiKey}`;
+    const cachedQuote = await this.cacheManager.get(cacheKey);
+    if (cachedQuote) {
+      return cachedQuote;
+    }
+
+    const url = 'https://dummyjson.com/quotes/random';
+    try {
+      const { data } = await firstValueFrom(this.httpService.get(url));
+
+      const quote = {
+        content: data.quote,
+        author: data.author,
+      };
+
+      await this.cacheManager.set(cacheKey, quote, 1000 * 60 * 60);
+
+      return quote;
+    } catch (error) {
+      this.logger.warn('Erro API Frases, usando fallback');
+      return {
+        content: 'First, solve the problem. Then, write the code.',
+        author: 'John Johnson',
+      };
+    }
+  }
+
+  async getWeather(lat: string, lon: string) {
+    const cacheKey = `weather_${lat}_${lon}`;
+
+    const cachedWeather = await this.cacheManager.get(cacheKey);
+    if (cachedWeather) {
+      return cachedWeather;
+    }
+
+    const apiKey = this.configService.get<string>('OPENWEATHER_API_KEY');
+    const baseURl = this.configService.get<string>('OPENWEATHER_BASE_URL');
+    const weatherUrl = `${baseURl}/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=pt_br&appid=${apiKey}`;
+    const geoUrl = `${baseURl}/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${apiKey}`;
 
     try {
       const [weatherResponse, geoResponse] = await Promise.all([
@@ -36,40 +70,31 @@ export class DashboardService {
         weatherData.name = geoData[0].name;
       }
 
+      await this.cacheManager.set(cacheKey, weatherData, 1000 * 60 * 10);
+
       return weatherData;
     } catch (error) {
-      this.logger.error(`Erro ao buscar clima/geo: ${error.message}`);
+      this.logger.error(`Erro clima: ${error.message}`);
       throw error;
     }
   }
 
   async getQuotes() {
-    const url = 'https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL';
+    const cacheKey = 'finance_data';
 
+    const cachedFinance = await this.cacheManager.get(cacheKey);
+    if (cachedFinance) {
+      return cachedFinance;
+    }
+
+    const url =
+      'https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL';
     try {
       const { data } = await firstValueFrom(this.httpService.get(url));
+      await this.cacheManager.set(cacheKey, data, 1000 * 60);
       return data;
     } catch (error) {
-      this.logger.error('Erro ao buscar cotações', error);
       throw error;
-    }
-  }
-
-  async getQuote() {
-    const url = 'https://dummyjson.com/quotes/random';
-
-    try {
-      const { data } = await firstValueFrom(this.httpService.get(url));
-      return {
-        content: data.quote,
-        author: data.author,
-      };
-    } catch (error) {
-      this.logger.warn('API de frases falhou, usando fallback');
-      return {
-        content: 'First, solve the problem. Then, write the code.',
-        author: 'John Johnson',
-      };
     }
   }
 }
