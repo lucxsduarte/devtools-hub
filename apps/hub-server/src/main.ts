@@ -12,7 +12,7 @@ async function bootstrap() {
   app.use(helmet());
 
   app.enableCors({
-    origin: true, // "true" aceita qualquer origem (útil para dev). Em produção, troque por ['http://localhost:4200']
+    origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });

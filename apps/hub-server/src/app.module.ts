@@ -10,6 +10,7 @@ import { UtilitiesModule } from './modules/utilities/utilities.module';
 import { EventsModule } from './modules/events/events.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { APP_GUARD } from '@nestjs/core';
     CoreModule,
     UtilitiesModule,
     EventsModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [

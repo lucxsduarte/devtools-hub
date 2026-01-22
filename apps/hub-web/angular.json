@@ -14,7 +14,8 @@
           "type": "component"
         },
         "@schematics/angular:service": {
-          "flat": false
+          "flat": false,
+          "type": "service"
         }
       },
       "root": "",

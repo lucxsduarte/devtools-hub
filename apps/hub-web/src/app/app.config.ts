@@ -4,6 +4,7 @@ import {provideRouter} from '@angular/router';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {provideSocketIo, SocketIoConfig} from 'ngx-socket-io';
 import {routes} from './app.routes';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 const socketConfig: SocketIoConfig = {
   url: 'http://localhost:3000',
@@ -20,6 +21,7 @@ export const appConfig: ApplicationConfig = {
 
     provideAnimationsAsync(),
 
-    provideSocketIo(socketConfig)
+    provideSocketIo(socketConfig),
+    provideHttpClient(withFetch())
   ]
 };

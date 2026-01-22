@@ -8,7 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { AvatarModule } from 'primeng/avatar';
 import { MenuItem } from 'primeng/api';
 
-import { ThemeService } from '../../services/theme.service';
+import { ThemeService } from '../../services/theme/theme.service';
 
 @Component({
   selector: 'app-navbar',
