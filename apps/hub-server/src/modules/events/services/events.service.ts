@@ -42,7 +42,7 @@ export class EventsService implements OnModuleInit {
 
       if (socketId && data) {
         console.log(`Enviando resultado via WebSocket para: ${socketId}`);
-        this.eventsGateway.sendToUser(socketId, 'analysis_complete', data);
+        this.eventsGateway.sendToUser(socketId, 'site-analysis-result', data);
       }
     } catch (error) {
       console.error('Erro ao processar mensagem do Redis:', error);

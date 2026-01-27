@@ -45,7 +45,11 @@ export class DashboardService {
   }
 
   async getWeather(lat: string, lon: string) {
-    const cacheKey = `weather_${lat}_${lon}`;
+    const latFixed = parseFloat(lat).toFixed(4);
+    const lonFixed = parseFloat(lon).toFixed(4);
+
+    const cacheKey = `weather_${latFixed}_${lonFixed}`;
+    this.logger.debug(`Buscando cache para chave: ${cacheKey}`);
 
     const cachedWeather = await this.cacheManager.get(cacheKey);
     if (cachedWeather) {

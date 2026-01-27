@@ -31,7 +31,7 @@ export class NavbarComponent implements OnInit {
       {
         label: 'Inspecionar',
         icon: 'pi pi-fw pi-search',
-        routerLink: '/utilities/site-inspector',
+        routerLink: '/inspector',
       },
       {
         label: 'Ferramentas',

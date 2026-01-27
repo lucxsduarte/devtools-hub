@@ -1,11 +1,51 @@
-/* You can add global styles to this file, and also import other style files */
-
-:root {
-  background-color: #18181b; /* Cor do surface-ground */
-}
+/* =========================================
+   ESTILOS GLOBAIS - DevToolsHub
+   ========================================= */
 
 body {
   background-color: var(--surface-ground);
   color: var(--text-color);
+  font-family: var(--font-family);
   margin: 0;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-card {
+  .p-card {
+    border: 1px solid var(--surface-border) !important;
+    border-radius: 12px !important;
+    background-color: var(--surface-card) !important;
+    /* Sombra suave */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  input, .p-inputtext {
+    background-color: var(--surface-ground) !important;
+    color: var(--text-color) !important;
+    border-color: var(--surface-border) !important;
+  }
+}
+
+input, textarea {
+  background-color: transparent;
+}
+
+.theme-toggle-btn {
+  background-color: transparent !important;
+  border-color: transparent !important;
+
+  color: var(--text-color) !important;
+
+  transition: none !important;
+}
+
+.theme-toggle-btn:hover {
+  background-color: var(--surface-hover) !important;
+  transition: background-color 0.2s !important;
+}
+
+.p-menubar {
+  background-color: var(--surface-card) !important;
+  border: none !important;
 }

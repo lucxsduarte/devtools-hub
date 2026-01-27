@@ -1,0 +1,44 @@
+@if (result(); as data) {
+  <div class="app-card fadein animation-duration-500 mt-5">
+    <p-card header="Relatório de Performance">
+
+      <div class="grid align-items-center">
+
+        <div class="col-12 md:col-4 flex flex-column align-items-center text-center border-right-1 surface-border">
+          <span class="text-500 font-medium mb-3">SEO Score</span>
+          <p-knob [(ngModel)]="data.nota" [readonly]="true" [max]="100"
+                  [valueColor]="data.nota > 80 ? '#22c55e' : '#eab308'"
+                  rangeColor="#3f3f46"></p-knob>
+        </div>
+
+        <div class="col-12 md:col-8 pl-4">
+          <ul class="list-none p-0 m-0">
+            <li class="flex align-items-center py-3 border-bottom-1 surface-border">
+              <span class="text-500 font-medium w-6rem">Velocidade</span>
+              <span class="text-900">
+                                <p-tag [severity]="data.velocidade === 'Rápido' ? 'success' : 'warning'"
+                                       [value]="data.velocidade"></p-tag>
+                            </span>
+            </li>
+            <li class="flex align-items-center py-3 border-bottom-1 surface-border">
+              <span class="text-500 font-medium w-6rem">URL</span>
+              <span class="text-900 text-overflow-ellipsis overflow-hidden white-space-nowrap" style="max-width: 300px">
+                                <a [href]="data.urlAnalisada" target="_blank" class="text-primary no-underline hover:underline">
+                                    {{ data.urlAnalisada }}
+                                </a>
+                            </span>
+            </li>
+            <li class="flex align-items-center py-3">
+              <span class="text-500 font-medium w-6rem">Cache</span>
+              <span class="text-500 text-sm">
+                                <i class="pi pi-clock mr-1"></i>
+                {{ data.cached_at | date:'dd/MM/yyyy HH:mm:ss' }}
+                            </span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </p-card>
+  </div>
+}

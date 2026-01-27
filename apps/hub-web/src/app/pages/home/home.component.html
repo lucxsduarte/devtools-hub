@@ -5,62 +5,60 @@
       <p-progressSpinner ariaLabel="Carregando" styleClass="w-4rem h-4rem"></p-progressSpinner>
       <div class="text-500 font-medium mt-3">Carregando seu dia...</div>
     </div>
-  }
-
-  @else {
+  } @else {
     <div class="mb-6 mt-3 text-center">
       @if (quoteData(); as quote) {
         <div class="fadein animation-duration-1000">
-          <h2 class="text-xl md:text-xl font-italic font-medium text-900 m-0 mb-2 line-height-3">
+          <i class="pi pi-bolt text-primary text-4xl mb-3"></i>
+          <h2 class="text-xl md:text-3xl font-italic font-medium text-900 m-0 mb-2 line-height-3">
             "{{ quote.content }}"
           </h2>
-          <span class="text-primary font-medium text-sm">- {{ quote.author }}</span>
+          <span class="text-primary font-medium text-lg">- {{ quote.author }}</span>
         </div>
       }
     </div>
 
     <div class="grid mb-5">
 
-      <div class="col-12 md:col-6 lg:col-3">
-        @if (weatherData(); as weather) {
-          <p-card styleClass="h-full shadow-2">
-            <ng-template pTemplate="title">
-              <div class="flex align-items-center gap-2">
-                <div class="bg-primary-50 border-round p-1 px-2 flex align-items-center justify-content-between" style="width: 100%; height: 2.5rem">
-                  <span class="text-500 font-medium text-base">Clima Local</span>
-                  <img [src]="'https://openweathermap.org/img/wn/' + weather.weather[0].icon + '.png'" width="30" alt="Icon">
-                </div>
+      <div class="col-12 md:col-6 lg:col-3 app-card"> @if (weatherData(); as weather) {
+        <p-card styleClass="h-full">
+          <ng-template pTemplate="title">
+            <div class="flex align-items-center gap-2">
+              <div class="bg-primary-50 border-round p-1 px-2 flex align-items-center justify-content-between" style="width: 100%; height: 2.5rem">
+                <span class="text-500 font-medium text-base">Clima Local</span>
+                <img [src]="'https://openweathermap.org/img/wn/' + weather.weather[0].icon + '.png'" width="30" alt="Icon">
               </div>
-            </ng-template>
+            </div>
+          </ng-template>
 
-            <ng-template pTemplate="content">
-              <div class="flex align-items-center justify-content-between mt-3">
-                <div>
-                  <div class="text-5xl font-bold text-primary">{{ weather.main.temp | number:'1.0-0' }}°C</div>
-                  <div class="text-500 capitalize mt-1 text-sm">{{ weather.weather[0].description }}</div>
-                </div>
+          <ng-template pTemplate="content">
+            <div class="flex align-items-center justify-content-between mt-3">
+              <div>
+                <div class="text-5xl font-bold text-primary">{{ weather.main.temp | number:'1.0-0' }}°C</div>
+                <div class="text-500 capitalize mt-1 text-sm">{{ weather.weather[0].description }}</div>
               </div>
-            </ng-template>
+            </div>
+          </ng-template>
 
-            <ng-template pTemplate="footer">
-              <div class="flex justify-content-between align-items-center text-sm font-medium border-top-1 surface-border pt-3">
+          <ng-template pTemplate="footer">
+            <div class="flex justify-content-between align-items-center text-sm font-medium border-top-1 surface-border pt-3">
                     <span class="text-900 flex align-items-center gap-1">
                         <i class="pi pi-map-marker text-primary"></i>
                       {{ weather.name }}
                     </span>
-                <div class="flex gap-2">
-                  <span class="text-blue-500"><i class="pi pi-arrow-down"></i> {{ weather.main.temp_min | number:'1.0-0' }}°</span>
-                  <span class="text-orange-500"><i class="pi pi-arrow-up"></i> {{ weather.main.temp_max | number:'1.0-0' }}°</span>
-                </div>
+              <div class="flex gap-2">
+                <span class="text-blue-500"><i class="pi pi-arrow-down"></i> {{ weather.main.temp_min | number:'1.0-0' }}°</span>
+                <span class="text-orange-500"><i class="pi pi-arrow-up"></i> {{ weather.main.temp_max | number:'1.0-0' }}°</span>
               </div>
-            </ng-template>
-          </p-card>
-        }
+            </div>
+          </ng-template>
+        </p-card>
+      }
       </div>
 
       @for (coin of financeData(); track coin.code) {
-        <div class="col-12 md:col-6 lg:col-3">
-          <p-card styleClass="h-full shadow-2">
+        <div class="col-12 md:col-6 lg:col-3 app-card">
+          <p-card styleClass="h-full">
             <ng-template pTemplate="title">
               <div class="flex align-items-center gap-2">
                 <div class="bg-primary-50 border-round p-1 px-2 flex align-items-center justify-content-between" style="width: 100%; height: 2.5rem">
@@ -84,8 +82,7 @@
 
             <ng-template pTemplate="footer">
               <div class="flex align-items-center gap-2 border-top-1 surface-border pt-3">
-                    <span [class]="coin.pctChange > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
-                          class="px-2 py-1 border-round font-bold text-sm">
+                    <span [class]="coin.pctChange > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'" class="px-2 py-1 border-round font-bold text-sm">
                         <i [class]="coin.pctChange > 0 ? 'pi pi-arrow-up' : 'pi pi-arrow-down'"></i>
                       {{ coin.pctChange }}%
                     </span>
@@ -97,21 +94,5 @@
       }
     </div>
 
-    <p-card header="Ferramentas" styleClass="shadow-2">
-      <div class="grid">
-        <div class="col-12 md:col-6 lg:col-4">
-          <p-button label="Gerador de CPF" icon="pi pi-id-card" severity="secondary" styleClass="p-button-outlined w-full text-left" routerLink="/generators/cpf"></p-button>
-        </div>
-        <div class="col-12 md:col-6 lg:col-4">
-          <p-button label="Formatador JSON" icon="pi pi-file-edit" severity="secondary" styleClass="p-button-outlined w-full text-left" routerLink="/formatters/json"></p-button>
-        </div>
-        <div class="col-12 md:col-6 lg:col-4">
-          <p-button label="Em Breve" icon="pi pi-lock" severity="secondary" styleClass="p-button-outlined w-full text-left" [disabled]="true"></p-button>
-        </div>
-      </div>
-    </p-card>
   }
-
-
-
 </div>
